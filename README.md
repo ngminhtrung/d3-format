@@ -25,9 +25,15 @@ And you got this:
 
 Welcome to [binary floating point](https://en.wikipedia.org/wiki/Double-precision_floating-point_format)! ಠ_ಠ
 
-Yet rounding error is not the only reason to customize number formatting. A table of numbers should be formatted consistently for comparison; above, 0.0 would be better than 0. Large numbers should have grouped digits (e.g., 42,000) or be in scientific or metric notation (4.2e+4, 42k). Currencies should have fixed precision ($3.50). Reported numerical results should be rounded to significant digits (4021 becomes 4000). Number formats should appropriate to the reader’s locale (42.000,00 or 42,000.00). The list goes on.
+Dẫu thế, làm tròn sai số không phải lý do duy nhất để phải có riêng d3-format. Hãy nghĩ đến các tình huống sau:
+- Các con số trong cùng hàng hoặc cột của bảng cần phải trông giống hệt nhau về định dạng. Nhìn vào ví dụ bên trên, rõ ràng là `0.0` sẽ đẹp hơn là `0`. 
+- Những con số lớn cần phải phân biệt hàng nghìn, hàng triệu, .v.v. (ví dụ viết `42,000` thay vì `42000`), hoặc viết theo kiểu khoa học chuyên ngành (như là `4.2e+4`, hoặc `42k`). 
+- Số lẻ của tiền tệ phải được cố định (ví dụ `$3.50`). 
+- Kết quả tính toán cần được làm tròn đến những chữ số có nghĩa (ví dụ `4021` trở thành `4000`).
+- Các con số cần phải được in ra theo kiểu của từng nơi, phù hợp với với thói quen của từng nước (ví dụ ở Việt Nam thì sẽ viết là `42.000,00` thay vì `42,000.00`).
+- Còn nhiều ví dụ khác nữa.
 
-Formatting numbers for human consumption is the purpose of d3-format, which is modeled after Python 3’s [format specification mini-language](https://docs.python.org/3/library/string.html#format-specification-mini-language) ([PEP 3101](https://www.python.org/dev/peps/pep-3101/)). Revisiting the example above:
+Mục tiêu của d3-format là định dạng các con số nhằm phục vụ việc đọc hiểu của con người. d3-format được dựa theo Python 3’s [format specification mini-language](https://docs.python.org/3/library/string.html#format-specification-mini-language) ([PEP 3101](https://www.python.org/dev/peps/pep-3101/)). Hãy thực hiện lại ví dụ trên:
 
 ```js
 var f = d3.format(".1f");
@@ -51,13 +57,13 @@ Now you get this:
 0.9
 ```
 
-But d3-format is much more than an alias for [number.toFixed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed)! A few more examples:
+Dẫu vậy, d3-format còn có nhiều thứ hay ho hơn [number.toFixed](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed)! Hãy xem các ví dụ sau:
 
 ```js
-d3.format(".0%")(0.123);  // rounded percentage, "12%"
+d3.format(".0%")(0.123);  // làm tròn thành phần trăm, "12%"
 d3.format("($.2f")(-3.5); // localized fixed-point currency, "(£3.50)"
-d3.format("+20")(42);     // space-filled and signed, "                 +42"
-d3.format(".^20")(42);    // dot-filled and centered, ".........42........."
+d3.format("+20")(42);     // thêm khoảng trắng và dấu cộng/ trừ, "                 +42"
+d3.format(".^20")(42);    // thêm dấu chấm và căn giữa, ".........42........."
 d3.format(".2s")(42e6);   // SI-prefix with two significant digits, "42M"
 d3.format("#x")(48879);   // prefixed lowercase hexadecimal, "0xbeef"
 d3.format(",.2r")(4223);  // grouped thousands with two significant digits, "4,200"
